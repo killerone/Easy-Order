@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417271147874",
+    "firebase_url": "https://too-easy-order.firebaseio.com",
+    "project_id": "too-easy-order",
+    "storage_bucket": "too-easy-order.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417271147874:android:5affc3af3de29a8e",
+        "android_client_info": {
+          "package_name": "com.example.easy_order"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417271147874-sfl2ipdvmntat0i40j77hdejdqorlfrv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPPjtGEeKj6JjxIaO_PlaOOEr4rrRfFJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417271147874-sfl2ipdvmntat0i40j77hdejdqorlfrv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
