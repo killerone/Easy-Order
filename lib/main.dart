@@ -1,6 +1,7 @@
+import 'package:easy_order/item_details.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
- 
+// import 'package:cloud_firestore/cloud_firestore.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -8,16 +9,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Developer Names'),
-    );
+        title: 'Easy Order',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: ItemDetails());
   }
 }
 
-class MyHomePage extends StatelessWidget {
+/*class MyHomePage extends StatelessWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
@@ -74,5 +75,4 @@ class MyHomePage extends StatelessWidget {
       );
   }
 }
-
-
+*/
