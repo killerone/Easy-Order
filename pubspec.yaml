@@ -74,7 +74,18 @@ flutter:
           weight: 700
         - asset: asset/fonts/Ubuntu-Medium.ttf
         - asset: asset/fonts/Ubuntu-Regular.ttf
-          
+    - family: Roboto
+      fonts:
+        - asset: asset/fonts/Roboto-Black.ttf
+        - asset: asset/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: asset/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: asset/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: asset/fonts/Roboto-Regular.ttf
+          weight: 400
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
