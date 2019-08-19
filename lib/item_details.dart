@@ -4,7 +4,14 @@ class ItemDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Chicken Tikka Masala")),
+      appBar: AppBar(
+        title: Text("Chicken Tikka Masala"),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              previousScreen(context);
+            }),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[ItemImage(), ItemDescription(), AddItemButton()],
@@ -32,7 +39,7 @@ class ItemDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      margin: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 25.0),
+      margin: EdgeInsets.fromLTRB(13.0, 20.0, 10.0, 20.0),
       child: Text(
         "Chicken tikka masala is composed of chicken tikka, boneless chunks of chicken marinated in spices and yogurt that are roasted in an oven, served in a creamy curry sauce.",
         style: TextStyle(
@@ -49,7 +56,7 @@ class AddItemButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+      margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 15.0),
       width: 300.0,
       height: 50.0,
       child: RaisedButton(
@@ -65,20 +72,26 @@ class AddItemButton extends StatelessWidget {
         ),
         elevation: 7,
         onPressed: () {
-          showSnackBar(context);
+          showSnackBar(context,'Added to Order');
         },
+        shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
       ),
     );
   }
 }
 
-void showSnackBar(BuildContext context) {
+void showSnackBar(BuildContext context,String text) {
   var snackBar = SnackBar(
+    backgroundColor: Colors.green,
     content: Text(
-      "Added To Order",
+      text,
       style: TextStyle(fontSize: 20.0),
     ),
   );
 
   Scaffold.of(context).showSnackBar(snackBar);
+}
+
+void previousScreen(BuildContext context) {
+  showSnackBar(context,'Previous Page');
 }

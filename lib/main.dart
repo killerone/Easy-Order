@@ -1,4 +1,5 @@
 import 'package:easy_order/item_details.dart';
+import 'package:easy_order/cart.dart';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ItemDetails());
+        home: Cart());
   }
 }
 
