@@ -54,6 +54,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - asset/images/ChickenTikkaMasala.jpg
+   - asset/images/chickentikka.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -84,6 +85,17 @@ flutter:
         - asset: asset/fonts/Roboto-Medium.ttf
           weight: 500
         - asset: asset/fonts/Roboto-Regular.ttf
+          weight: 400
+    - family: Montserrat
+      fonts:
+        - asset: asset/fonts/Montserrat-Black.ttf
+        - asset: asset/fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: asset/fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: asset/fonts/Montserrat-Medium.ttf
+          weight: 500
+        - asset: asset/fonts/Montserrat-Regular.ttf
           weight: 400
 
   #

@@ -12,10 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Easy Order',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Cart());
+        // theme: ThemeData(primaryColor: Color.fromRGBO(85, 139, 47, 1)),
+        theme: ThemeData(primaryColor: Color.fromRGBO(124, 179, 66, 1)),
+        home: ItemDetails());
   }
 }
 
