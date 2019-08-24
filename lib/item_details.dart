@@ -2,24 +2,6 @@ import 'package:flutter/material.dart';
 
 class ItemDetails extends StatelessWidget {
   @override
-  /* Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Chicken Tikka Masala"),
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              previousScreen(context);
-            }),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[ItemImage(), ItemDescription(), AddItemButton()],
-        ),
-      ),
-    );
-  }*/
-
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -39,18 +21,16 @@ class ItemDetails extends StatelessWidget {
                   ),
                   Padding(
                       padding: EdgeInsets.only(right: 15.0),
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.arrow_back),
-                            color: Colors.black,
-                            onPressed: () {},
-                          )
-                        ],
+                      child: IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        color: Colors.black,
+                        onPressed: () {},
                       ))
                 ],
               ),
               SizedBox(height: 20.0),
+
+              // Item name and price
               Padding(
                   padding: EdgeInsets.only(left: 15.0, right: 15.0),
                   child: Row(
@@ -77,6 +57,8 @@ class ItemDetails extends StatelessWidget {
                     ],
                   )),
               SizedBox(height: 20.0),
+
+              //Item Description
               Padding(
                   padding: EdgeInsets.only(left: 20.0, right: 20.0),
                   child: ItemDescription())
@@ -84,6 +66,7 @@ class ItemDetails extends StatelessWidget {
           )
         ],
       ),
+      // Order Button
       bottomNavigationBar: Material(
         elevation: 7.0,
         color: Colors.white,

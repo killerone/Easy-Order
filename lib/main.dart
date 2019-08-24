@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // theme: ThemeData(primaryColor: Color.fromRGBO(85, 139, 47, 1)),
         theme: ThemeData(primaryColor: Color.fromRGBO(124, 179, 66, 1)),
-        home: ItemDetails());
+        home: Cart());
   }
 }
 
