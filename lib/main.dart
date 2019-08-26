@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color.fromRGBO(161,221,112, 1)
       ),
-      home: MyHomePage(title: 'Developer Names'),
+      home: MyHomePage(title: 'Developer Names123456'),
     );
   }
 }
