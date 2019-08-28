@@ -172,6 +172,7 @@ Future<bool> customizeDialog(context) {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
+                customizeOptions(),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: FlatButton(
@@ -192,4 +193,44 @@ Future<bool> customizeDialog(context) {
           ),
         );
       });
+}
+
+Widget customizeOptions() {
+  return Container(
+    height: 350.0,
+    width: 200.0,
+    child: SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("Hello World"),
+          Text("1234568"),
+        ],
+      ),
+    ),
+  );
 }
