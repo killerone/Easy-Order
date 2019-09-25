@@ -1,70 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ItemDetails extends StatelessWidget {
+class Dish extends StatefulWidget {
+  @override
+  _DishState createState() => _DishState();
+}
+
+class _DishState extends State<Dish> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Stack(
-                children: <Widget>[
-                  Container(
-                    height: 350.0,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('asset/images/chickentikka.jpg'),
-                            fit: BoxFit.cover)),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(right: 15.0),
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        color: Colors.black,
-                        onPressed: () {},
-                      ))
-                ],
-              ),
-              SizedBox(height: 20.0),
-
-              // Item name and price
-              Padding(
-                  padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          'Chicken Tikka Masala',
-                          style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 25.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
+      body: StreamBuilder(
+        stream: Firestore.instance
+            .collection('dish')
+            .document('DPGHMZTFH2g2EmhV6Vu7')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return new Text('Loading...');
+          } else {
+            return ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          height: 350.0,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      NetworkImage(snapshot.data['imagePath']),
+                                  // image: NetworkImage(
+                                  // 'https://www.thespruceeats.com/thmb/gwpiDc5y98oumhsMNd2hw7zYn3o=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/how-to-make-dosa-1957716-Hero-5b59e84346e0fb0071e637c5.jpg'),
+                                  fit: BoxFit.cover)),
                         ),
-                      ),
-                      Text(
-                        '\₹ 350',
-                        style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontSize: 25.0,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  )),
-              SizedBox(height: 20.0),
+                        Padding(
+                            padding: EdgeInsets.only(right: 15.0),
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              color: Colors.black,
+                              onPressed: () {},
+                            ))
+                      ],
+                    ),
+                    SizedBox(height: 20.0),
 
-              //Item Description
-              Padding(
-                  padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                  child: ItemDescription())
-            ],
-          )
-        ],
+                    // Item name and price
+                    Padding(
+                        padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              child: Text(
+                                snapshot.data['name'],
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: 25.0,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Text(
+                              '\₹ ' + snapshot.data['price'].toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 25.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )),
+                    SizedBox(height: 20.0),
+
+                    //Item Description
+                    Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: ItemDescription(snapshot.data['description']))
+                  ],
+                )
+              ],
+            );
+          }
+        },
       ),
       // Order Button
       bottomNavigationBar: Material(
@@ -77,6 +98,10 @@ class ItemDetails extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
+  String imgUrl;
+  ItemImage(String imgUrl) {
+    this.imgUrl = imgUrl;
+  }
   @override
   Widget build(BuildContext context) {
     AssetImage assetImage = AssetImage('asset/images/ChickenTikkaMasala.jpg');
@@ -90,12 +115,16 @@ class ItemImage extends StatelessWidget {
 }
 
 class ItemDescription extends StatelessWidget {
+  String description;
+  ItemDescription(String description) {
+    this.description = description;
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       child: Text(
-        "Chicken tikka masala is composed of chicken tikka, boneless chunks of chicken marinated in spices and yogurt that are roasted in an oven, served in a creamy curry sauce.",
+        this.description,
         style: TextStyle(
             fontSize: 18.0,
             fontFamily: "Roboto",
