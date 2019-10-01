@@ -155,7 +155,8 @@ class AddItemButton extends StatelessWidget {
         ),
         elevation: 7,
         onPressed: () {
-          customizeDialog(context);
+          // customizeDialog(context);
+          addInCart();
         },
       ),
     );
@@ -262,4 +263,14 @@ Widget customizeOptions() {
       ),
     ),
   );
+}
+
+void addInCart() {
+  // fetch cart and append new data in the array
+  Firestore.instance.collection("cart").document("table5").updateData({
+    'items': [
+      {'name': 'briyani', 'price': 50, 'quantity': 30},
+      {'name': 'rics', 'price': 21, 'quantity': 11}
+    ]
+  });
 }
