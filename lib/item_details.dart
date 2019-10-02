@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import './services/cart_services.dart';
+import './services/dish_service.dart';
 
 class Dish extends StatefulWidget {
   @override
@@ -7,6 +9,13 @@ class Dish extends StatefulWidget {
 }
 
 class _DishState extends State<Dish> {
+  _DishState() {
+    var cart = new Cart();
+    cart.updateCartQuantity("P809Jy6XvIpCccsyVJUz", 1);
+    var dishService = DishService();
+    // Future<DocumentSnapshot> item = dishService.getDish("P809Jy6XvIpCccsyVJUz");
+    // print(item);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +100,7 @@ class _DishState extends State<Dish> {
       bottomNavigationBar: Material(
         elevation: 7.0,
         color: Colors.white,
-        child: AddItemButton(),
+        // child: AddItemButton(),
       ),
     );
   }
@@ -136,6 +145,10 @@ class ItemDescription extends StatelessWidget {
 }
 
 class AddItemButton extends StatelessWidget {
+  var cart = new Cart();
+  var data;
+  AddItemButton(this.data);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -157,6 +170,7 @@ class AddItemButton extends StatelessWidget {
         onPressed: () {
           // customizeDialog(context);
           addInCart();
+          // this.cart.addToCart(item, quantity)
         },
       ),
     );
