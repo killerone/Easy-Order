@@ -10,8 +10,8 @@ class Dish extends StatefulWidget {
 
 class _DishState extends State<Dish> {
   _DishState() {
-    var cart = new Cart();
-    cart.updateCartQuantity("P809Jy6XvIpCccsyVJUz", 1);
+    var cart = new CartService();
+    cart.updateCartQuantity("DPGHMZTFH2g2EmhV6Vu7", 1);
     var dishService = DishService();
     // Future<DocumentSnapshot> item = dishService.getDish("P809Jy6XvIpCccsyVJUz");
     // print(item);
@@ -145,7 +145,7 @@ class ItemDescription extends StatelessWidget {
 }
 
 class AddItemButton extends StatelessWidget {
-  var cart = new Cart();
+  var cart = new CartService();
   var data;
   AddItemButton(this.data);
 

@@ -1,8 +1,32 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import './services/cart_services.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
+  @override
+  _Cart createState() => _Cart();
+}
+
+class _Cart extends State<Cart> {
+  List<Widget> cartItems;
+  var cartService;
+
+  bool show = false;
+  _Cart() {
+    cartService = new CartService();
+    Future<QuerySnapshot> list = cartService.getCart();
+    cartItems = new List<Widget>();
+    list.then((onValue) => onValue.documentChanges.forEach((DocumentChange p) {
+          var data = p.document.data;
+          cartItems.add(new _Card(data['name'], data['price'],
+              data['imagePath'], data['quantity'], p.document.documentID));
+        }));
+    show = true;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // if (show) return Text("loading");
     return Scaffold(
       body: SingleChildScrollView(
           child: Column(
@@ -41,16 +65,7 @@ class Cart extends StatelessWidget {
                 ],
               ),
               Column(
-                children: <Widget>[
-                  itemCard('Chicken tikka masala', '248',
-                      'asset/images/chickentikka.jpg', 2, 0, context),
-                  itemCard('Chicken tikka masala', '248',
-                      'asset/images/chickentikka.jpg', 2, 0, context),
-                  itemCard('Chicken tikka masala', '248',
-                      'asset/images/ChickenTikkaMasala.jpg', 2, 0, context),
-                  itemCard('Chicken tikka masala', '248',
-                      'asset/images/chickentikka.jpg', 2, 0, context),
-                ],
+                children: cartItems,
               ),
             ],
           )
@@ -97,8 +112,19 @@ class Cart extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget itemCard(itemName, price, imagePath, quantity, i, context) {
+class _Card extends StatelessWidget {
+  String itemName;
+  int price;
+  String imagePath;
+  int quantity;
+  String i;
+
+  _Card(this.itemName, this.price, this.imagePath, this.quantity, this.i);
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
         onTap: () {},
         child: Padding(
@@ -123,7 +149,7 @@ class Cart extends StatelessWidget {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               // Item image
-                              image: AssetImage(imagePath),
+                              image: NetworkImage(this.imagePath),
                               fit: BoxFit.contain)),
                     ),
                     SizedBox(
@@ -137,7 +163,7 @@ class Cart extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               // Item name
-                              itemName,
+                              this.itemName,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
@@ -154,7 +180,7 @@ class Cart extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
                             Text(
-                              '\₹ $price',
+                              '\₹ $this.price',
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontSize: 15.0,

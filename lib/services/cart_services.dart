@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_order/cart.dart';
 
-class Cart {
+class CartService {
+  CartService();
   CollectionReference FIRESTORE_REF = Firestore.instance
       .collection("cart")
       .document("table5")
       .collection("items");
 
-  getCart() {
-    FIRESTORE_REF.getDocuments().then((docs) {
-      print(docs);
-    });
+  Future<QuerySnapshot> getCart() {
+    var data = FIRESTORE_REF.getDocuments();
+    return data;
   }
 
   Future<DocumentSnapshot> getItem(String id) {
@@ -27,10 +28,10 @@ class Cart {
     if (item.data == null)
       // if not. then adding it into cart
       item.reference.setData({
-        'name': "Briyani",
-        'price': 50,
+        'name': "Paneer Makhni ",
+        'price': 350,
         'imagePath':
-            'https://firebasestorage.googleapis.com/v0/b/too-easy-order.appspot.com/o/images%2Fbriyani.jpg?alt=media&token=5cb42161-1d9f-42a4-86d5-98eae5d24658',
+            'https://firebasestorage.googleapis.com/v0/b/too-easy-order.appspot.com/o/images%2FPaneerMakhni.jpg?alt=media&token=a6b26e24-7802-42b6-ba80-154e762d930e',
         'quantity': quantity
       }).then((onValue) => print("added"));
     else {

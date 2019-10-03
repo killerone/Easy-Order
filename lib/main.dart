@@ -1,4 +1,4 @@
-import 'package:easy_order/item_details.dart';
+import 'package:easy_order/dish.dart';
 import 'package:easy_order/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // theme: ThemeData(primaryColor: Color.fromRGBO(85, 139, 47, 1)),
         theme: ThemeData(primaryColor: Color.fromRGBO(124, 179, 66, 1)),
-        home: Dish());
+        home: Cart());
   }
 
   void addInCart() {
