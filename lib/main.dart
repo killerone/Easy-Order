@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'Screens/splash_screen.dart';
 
 void main(){
-  runApp(
-    Center(
-      child:
-        Text("Hello Flutter",textDirection: TextDirection.ltr)
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SplashScreen(),
+    theme: ThemeData(
+      primaryColor: Colors.lightGreen
     ),
-  );
-
+  ));
 }
