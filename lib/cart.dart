@@ -8,25 +8,88 @@ class Cart extends StatefulWidget {
 }
 
 class _Cart extends State<Cart> {
-  List<Widget> cartItems;
-  var cartService;
-
-  bool show = false;
-  _Cart() {
-    cartService = new CartService();
-    Future<QuerySnapshot> list = cartService.getCart();
-    cartItems = new List<Widget>();
-    list.then((onValue) => onValue.documentChanges.forEach((DocumentChange p) {
-          var data = p.document.data;
-          cartItems.add(new _Card(data['name'], data['price'],
-              data['imagePath'], data['quantity'], p.document.documentID));
-        }));
-    show = true;
+  Widget _buildCartItem(BuildContext context, DocumentSnapshot document) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+          borderRadius: BorderRadius.circular(10.0),
+          elevation: 3.0,
+          child: Container(
+            margin: EdgeInsets.only(bottom: 10.0),
+            // height: 140,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: <Widget>[
+                // SizedBox(width: 5.0),
+                Container(
+                  height: 550.0,
+                  width: 150.0,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          // Item image
+                          image: NetworkImage(document['imagePath']),
+                          fit: BoxFit.contain)),
+                ),
+                SizedBox(
+                  width: 15.0,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          // Item name
+                          document['name'],
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.0),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 7.0,
+                    ),
+                    // Item price
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Text(
+                          '\₹ ' + document["price"].toString(),
+                          style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 15.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        // Row(
+                        //   // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //   children: <Widget>[
+                        //     Container(
+                        //       decoration: BoxDecoration(
+                        //           color: Colors.grey.withOpacity(0.4)),
+                        //       child: Text("+"),
+                        //     )
+                        //   ],
+                        // )
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // if (show) return Text("loading");
     return Scaffold(
       body: SingleChildScrollView(
           child: Column(
@@ -64,9 +127,23 @@ class _Cart extends State<Cart> {
                   ),
                 ],
               ),
-              Column(
-                children: cartItems,
-              ),
+              StreamBuilder(
+                  stream: Firestore.instance
+                      .collection("cart")
+                      .document("table5")
+                      .collection("items")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return const Text("Loading..");
+                    return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemExtent: 80.0,
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) => _buildCartItem(
+                          context, snapshot.data.documents[index]),
+                    );
+                  })
             ],
           )
         ],
@@ -111,100 +188,6 @@ class _Cart extends State<Cart> {
         ),
       ),
     );
-  }
-}
-
-class _Card extends StatelessWidget {
-  String itemName;
-  int price;
-  String imagePath;
-  int quantity;
-  String i;
-
-  _Card(this.itemName, this.price, this.imagePath, this.quantity, this.i);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-        onTap: () {},
-        child: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Material(
-              borderRadius: BorderRadius.circular(10.0),
-              elevation: 3.0,
-              child: Container(
-                padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                width: MediaQuery.of(context).size.width - 20,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 5.0),
-                    Container(
-                      height: 150.0,
-                      width: 125.0,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              // Item image
-                              image: NetworkImage(this.imagePath),
-                              fit: BoxFit.contain)),
-                    ),
-                    SizedBox(
-                      width: 15.0,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              // Item name
-                              this.itemName,
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 17.0),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 7.0,
-                        ),
-                        // Item price
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Text(
-                              '\₹ $this.price',
-                              style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 15.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            // Row(
-                            //   // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            //   children: <Widget>[
-                            //     Container(
-                            //       decoration: BoxDecoration(
-                            //           color: Colors.grey.withOpacity(0.4)),
-                            //       child: Text("+"),
-                            //     )
-                            //   ],
-                            // )
-                          ],
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              )),
-        ));
   }
 }
 
