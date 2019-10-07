@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_order/cart.dart';
 
 class CartService {
   CartService();
@@ -19,6 +18,14 @@ class CartService {
 
   addToCart(item, quantity) {
     updateCartQuantity(item.id, quantity);
+  }
+
+  increaseQuantity(String id){
+    this.updateCartQuantity(id, 1);
+  }
+
+  decreaseQuantity(String id){
+    this.updateCartQuantity(id, -1);
   }
 
   updateCartQuantity(String id, int quantity) async {
