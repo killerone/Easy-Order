@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
   }
 
   void addInCart() {
+    // Firestore.instance.collection("cuisine").where()
     Firestore.instance.collection("cart").document().setData({"tbNumber": 123});
     Firestore.instance
         .collection("cart")

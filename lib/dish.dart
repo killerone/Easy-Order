@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './services/cart_services.dart';
-import './services/dish_service.dart';
 import './drawer.dart';
 
 class Dish extends StatefulWidget {
@@ -12,25 +11,24 @@ class Dish extends StatefulWidget {
 class _DishState extends State<Dish> {
   _DishState() {
     var cart = new CartService();
-    cart.updateCartQuantity("DPGHMZTFH2g2EmhV6Vu7", 1);
-    var dishService = DishService();
-    // Future<DocumentSnapshot> item = dishService.getDish("P809Jy6XvIpCccsyVJUz");
-    // print(item);
+    // cart.updateCartQuantity("DPGHMZTFH2g2EmhV6Vu7", 1);
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: CustomDrawer(),
-      body: StreamBuilder(
+    return StreamBuilder<DocumentSnapshot>(
         stream: Firestore.instance
             .collection('dish')
             .document('DPGHMZTFH2g2EmhV6Vu7')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return new Text('Loading...');
-          } else {
-            return ListView(
+            return CircularProgressIndicator(
+              strokeWidth: 4.0,
+            );
+          }
+          return Scaffold(
+            drawer: CustomDrawer(),
+            body: ListView(
               shrinkWrap: true,
               children: <Widget>[
                 Column(
@@ -44,8 +42,6 @@ class _DishState extends State<Dish> {
                               image: DecorationImage(
                                   image:
                                       NetworkImage(snapshot.data['imagePath']),
-                                  // image: NetworkImage(
-                                  // 'https://www.thespruceeats.com/thmb/gwpiDc5y98oumhsMNd2hw7zYn3o=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/how-to-make-dosa-1957716-Hero-5b59e84346e0fb0071e637c5.jpg'),
                                   fit: BoxFit.cover)),
                         ),
                         Padding(
@@ -94,34 +90,20 @@ class _DishState extends State<Dish> {
                   ],
                 )
               ],
-            );
-          }
-        },
-      ),
-      // Order Button
-      bottomNavigationBar: Material(
-        elevation: 7.0,
-        color: Colors.white,
-        // child: AddItemButton(),
-      ),
-    );
-  }
-}
+            ),
 
-class ItemImage extends StatelessWidget {
-  String imgUrl;
-  ItemImage(String imgUrl) {
-    this.imgUrl = imgUrl;
-  }
-  @override
-  Widget build(BuildContext context) {
-    AssetImage assetImage = AssetImage('asset/images/ChickenTikkaMasala.jpg');
-    Image image = Image(
-      image: assetImage,
-    );
-    return Container(
-      child: image,
-    );
+            // Order Button
+            bottomNavigationBar: Material(
+              elevation: 7.0,
+              color: Colors.white,
+              child: AddItemButton(
+                  snapshot.data.documentID,
+                  snapshot.data['imagePath'],
+                  snapshot.data['name'],
+                  snapshot.data['price']),
+            ),
+          );
+        });
   }
 }
 
@@ -147,9 +129,13 @@ class ItemDescription extends StatelessWidget {
 }
 
 class AddItemButton extends StatelessWidget {
-  var cart = new CartService();
-  var data;
-  AddItemButton(this.data);
+  final id;
+  final imagePath;
+  final name;
+  final price;
+
+  final cart_service = new CartService();
+  AddItemButton(this.id, this.imagePath, this.name, this.price);
 
   @override
   Widget build(BuildContext context) {
@@ -170,9 +156,9 @@ class AddItemButton extends StatelessWidget {
         ),
         elevation: 7,
         onPressed: () {
-          // customizeDialog(context);
-          addInCart();
-          // this.cart.addToCart(item, quantity)
+          cart_service
+              .addToCart(id, name, imagePath, price)
+              .then((data) => showSnackBar(context, "Added to cart"));
         },
       ),
     );
@@ -188,7 +174,6 @@ void showSnackBar(BuildContext context, String text) {
       style: TextStyle(fontSize: 20.0),
     ),
   );
-
   Scaffold.of(context).showSnackBar(snackBar);
 }
 
@@ -279,14 +264,4 @@ Widget customizeOptions() {
       ),
     ),
   );
-}
-
-void addInCart() {
-  // fetch cart and append new data in the array
-  Firestore.instance.collection("cart").document("table5").updateData({
-    'items': [
-      {'name': 'briyani', 'price': 50, 'quantity': 30},
-      {'name': 'rics', 'price': 21, 'quantity': 11}
-    ]
-  });
 }
