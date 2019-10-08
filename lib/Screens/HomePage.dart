@@ -8,6 +8,9 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomePageState extends State<HomePage> {
+
+  Route route = MaterialPageRoute(builder: (context) => DisplayCuisine());
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -46,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            custom(Icons.restaurant_menu,'Menu',() =>{}),
+            custom(Icons.restaurant_menu,'Menu',() =>Navigator.pushReplacement(context, route)),
             custom(Icons.shopping_cart,'Cart',()=>{}),
           ],
         ),
