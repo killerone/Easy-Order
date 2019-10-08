@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import './services/cart_services.dart';
+import './drawer.dart';
 
 class Cart extends StatelessWidget {
   @override
@@ -19,6 +20,7 @@ class _CartScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: false,
       ),
+      drawer: CustomDrawer(),
       body: StreamBuilder(
           stream: Firestore.instance
               .collection("cart")
@@ -46,6 +48,18 @@ class _CartScreen extends StatelessWidget {
                       .collection("items")
                       .snapshots(),
                   builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return ListTile(
+                        title: Text(
+                          "Total:",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                          "\₹ 0.0",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                      );
+                    }
                     return ListTile(
                       title: Text(
                         "Total:",
@@ -77,10 +91,14 @@ class _CartScreen extends StatelessWidget {
 
   Widget _total(snapshot) {
     double totalPrice = 0;
-    for (var i = 0; i < snapshot.data.documents.length; i++){
-      totalPrice += snapshot.data.documents[i].data['price'] * snapshot.data.documents[i].data['quantity'];
+    for (var i = 0; i < snapshot.data.documents.length; i++) {
+      totalPrice += snapshot.data.documents[i].data['price'] *
+          snapshot.data.documents[i].data['quantity'];
     }
-    return Text("\₹ $totalPrice",style: TextStyle(color: Colors.green),);
+    return Text(
+      "\₹ $totalPrice",
+      style: TextStyle(color: Colors.green),
+    );
   }
 
   Widget _buildCartItem(DocumentSnapshot document) {

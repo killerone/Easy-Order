@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './services/cart_services.dart';
 import './services/dish_service.dart';
+import './drawer.dart';
 
 class Dish extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _DishState extends State<Dish> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       body: StreamBuilder(
         stream: Firestore.instance
             .collection('dish')
