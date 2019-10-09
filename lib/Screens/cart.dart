@@ -14,79 +14,71 @@ class _CartScreen extends StatelessWidget {
   final cartService = new CartService();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: new AppBar(
-        title: Text('Cart', style: TextStyle(color: Colors.white)),
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: false,
-      ),
-      drawer: CustomDrawer(),
-      body: StreamBuilder(
-          stream: Firestore.instance
-              .collection("cart")
-              .document("table5")
-              .collection("items")
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return Text("Loading....");
-            return ListView.builder(
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance
+            .collection("cart")
+            .document("table5")
+            .collection("items")
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Scaffold(
+              appBar: new AppBar(
+                title: Text('Cart', style: TextStyle(color: Colors.white)),
+                backgroundColor: Theme.of(context).primaryColor,
+                centerTitle: false,
+              ),
+              drawer: CustomDrawer(),
+              body: CircularProgressIndicator(
+                strokeWidth: 4.0,
+              ),
+            );
+          }
+          return Scaffold(
+            appBar: new AppBar(
+              title: Text('Cart', style: TextStyle(color: Colors.white)),
+              backgroundColor: Theme.of(context).primaryColor,
+              centerTitle: false,
+            ),
+            drawer: CustomDrawer(),
+            body: ListView.builder(
               itemCount: snapshot.data.documents.length,
               itemBuilder: (context, index) {
                 return _buildCartItem(snapshot.data.documents[index]);
               },
-            );
-          }),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: StreamBuilder(
-                  stream: Firestore.instance
-                      .collection("cart")
-                      .document("table5")
-                      .collection("items")
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return ListTile(
-                        title: Text(
-                          "Total:",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          "\₹ 0.0",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      );
-                    }
-                    return ListTile(
+            ),
+            bottomNavigationBar: Container(
+              color: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: ListTile(
                       title: Text(
                         "Total:",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: _total(snapshot),
-                    );
-                  }),
-            ),
-            Expanded(
-              child: MaterialButton(
-                onPressed: () {},
-                child: Text(
-                  "PLACE ORDER",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.0,
-                      wordSpacing: 2.0),
-                ),
-                color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  Expanded(
+                    child: MaterialButton(
+                      onPressed: () {},
+                      child: Text(
+                        "PLACE ORDER",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: 1.0,
+                            wordSpacing: 2.0),
+                      ),
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          );
+        });
   }
 
   Widget _total(snapshot) {
@@ -149,30 +141,3 @@ class _CartScreen extends StatelessWidget {
     );
   }
 }
-
-// class _CartState extends State<Cart> {
-
-// }
-
-// class _CartProduct extends StatefulWidget {
-//   final snapshot;
-//   _CartProduct(this.snapshot);
-//   @override
-//   _CartProductState createState() => _CartProductState(this.snapshot);
-// }
-
-// class _CartProductState extends State<_CartProduct> {
-//   var snapshot;
-//   final cartService = new CartService();
-//   _CartProductState(this.snapshot);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: snapshot.data.documents.length,
-//       itemBuilder: (context, index) {
-//         return _buildCartItem(snapshot.data.documents[index]);
-//       },
-//     );
-//   }
-// }
