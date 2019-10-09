@@ -89,7 +89,7 @@ class _CartScreen extends StatelessWidget {
     }
     return Text(
       "\₹ $totalPrice",
-      style: TextStyle(color: Colors.green),
+      style: TextStyle(color: Colors.green.shade600),
     );
   }
 
@@ -125,7 +125,7 @@ class _CartScreen extends StatelessWidget {
                   },
                 ),
                 Text(document.data['quantity'].toString(),
-                    style: TextStyle(fontSize: 40.0, color: Colors.green)),
+                    style: TextStyle(fontSize: 40.0, color: Colors.green.shade600)),
                 IconButton(
                   icon: Icon(Icons.arrow_drop_down),
                   iconSize: 50.0,

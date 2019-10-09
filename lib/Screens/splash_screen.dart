@@ -27,7 +27,7 @@ class _SplashScreenState  extends State<SplashScreen>{
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors:[ Colors.green.shade200,Colors.green.shade600],
+              gradient: LinearGradient(colors:[ Colors.green.shade300,Colors.green.shade600],
                 begin: Alignment.bottomCenter,
                 end : Alignment.topCenter,
               ),

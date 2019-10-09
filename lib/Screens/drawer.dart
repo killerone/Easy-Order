@@ -11,8 +11,8 @@ class CustomDrawer extends StatelessWidget {
           DrawerHeader(
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: <Color>[
-              Colors.lightGreen.shade600,
-              Colors.lightGreenAccent
+              Colors.green.shade600,
+              Colors.green.shade300
             ])),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -22,7 +22,7 @@ class CustomDrawer extends StatelessWidget {
                   radius: 30.0,
                   child: Icon(
                     Icons.restaurant,
-                    color: Colors.lightGreen,
+                    color: Colors.green.shade600,
                     size: 25.0,
                   ),
                 ),
@@ -68,7 +68,7 @@ class _Custom extends StatelessWidget {
             border: Border(bottom: BorderSide(color: Colors.grey.shade400))),
         child: InkWell(
           onTap: onTap,
-          splashColor: Colors.lightGreenAccent,
+          splashColor: Colors.green.shade600,
           child: Container(
             height: 60.0,
             child: Row(
