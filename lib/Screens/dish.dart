@@ -4,22 +4,23 @@ import './drawer.dart';
 import './../services/cart_services.dart';
 
 class Dish extends StatefulWidget {
+  String id;
+
+  Dish({this.id});
   @override
-  _DishState createState() => _DishState();
+  _DishState createState() => _DishState(this.id);
 }
 
 class _DishState extends State<Dish> {
-  _DishState() {
+  final id;
+  _DishState(this.id) {
     var cart = new CartService();
     // cart.updateCartQuantity("DPGHMZTFH2g2EmhV6Vu7", 1);
   }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
-            .collection('dish')
-            .document('DPGHMZTFH2g2EmhV6Vu7')
-            .snapshots(),
+        stream: Firestore.instance.collection('dish').document(id).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return CircularProgressIndicator(
@@ -44,13 +45,13 @@ class _DishState extends State<Dish> {
                                       NetworkImage(snapshot.data['imagePath']),
                                   fit: BoxFit.cover)),
                         ),
-                        Padding(
-                            padding: EdgeInsets.only(right: 15.0),
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              color: Colors.black,
-                              onPressed: () {},
-                            ))
+                        // Padding(
+                        //     padding: EdgeInsets.only(right: 15.0),
+                        //     child: IconButton(
+                        //       icon: Icon(Icons.arrow_back),
+                        //       color: Colors.black,
+                        //       onPressed: () {},
+                        //     ))
                       ],
                     ),
                     SizedBox(height: 20.0),
@@ -109,8 +110,10 @@ class _DishState extends State<Dish> {
 
 class ItemDescription extends StatelessWidget {
   String description;
+
   ItemDescription(String description) {
     this.description = description;
+    print(description);
   }
   @override
   Widget build(BuildContext context) {
