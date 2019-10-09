@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
             DrawerHeader(
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: <Color>[
-                  Colors.lightGreen.shade600,
-                  Colors.lightGreenAccent
+                  Colors.green.shade600,
+                  Colors.green.shade300
                 ])
               ),
               child: Column(
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                     radius: 30.0,
                     child: Icon(
                       Icons.restaurant,
-                      color: Colors.lightGreen,
+                      color: Colors.green.shade600,
                       size: 25.0,
                     ),
                   ),
