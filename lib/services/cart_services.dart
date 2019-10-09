@@ -12,11 +12,11 @@ class CartService {
     return data;
   }
 
-  Future<DocumentSnapshot> getItem(String id) {
-    return FIRESTORE_REF.document(id).get();
-  }
+  Future<DocumentSnapshot> getItem(String id) =>
+      FIRESTORE_REF.document(id).get();
 
-  Future<void> addToCart(String id, String name, String imagePath, int price) async {
+  Future<void> addToCart(
+      String id, String name, String imagePath, int price) async {
     final ds = await FIRESTORE_REF.document(id).get();
     if (ds.data == null) {
       return ds.reference.setData({
@@ -30,13 +30,9 @@ class CartService {
     }
   }
 
-  increaseQuantity(String id) {
-    this.updateCartQuantity(id, 1);
-  }
+  increaseQuantity(String id) => this.updateCartQuantity(id, 1);
 
-  decreaseQuantity(String id) {
-    this.updateCartQuantity(id, -1);
-  }
+  decreaseQuantity(String id) => this.updateCartQuantity(id, -1);
 
   updateCartQuantity(String id, int quantity) async {
     var item = await getItem(id);
@@ -47,5 +43,17 @@ class CartService {
       item.reference
           .updateData({'quantity': item.data['quantity'] + quantity}).then(
               (onValue) => print("updated $quantity"));
+  }
+
+  Future<dynamic> placeOrder() async {
+    final cart = await this.getCart();
+    var order = [];
+    cart.documents.forEach((dish) {
+      order.add(dish);
+    });
+
+    return Firestore.instance
+        .collection("order")
+        .add({'items': order, 'status': 0});
   }
 }

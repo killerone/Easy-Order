@@ -9,10 +9,6 @@ class Dish extends StatefulWidget {
 }
 
 class _DishState extends State<Dish> {
-  _DishState() {
-    var cart = new CartService();
-    // cart.updateCartQuantity("DPGHMZTFH2g2EmhV6Vu7", 1);
-  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(

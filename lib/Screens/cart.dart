@@ -62,7 +62,9 @@ class _CartScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        this.cartService.placeOrder().then((r) {this.showSnackBar(context, "Order Placed..")});
+                      },
                       child: Text(
                         "PLACE ORDER",
                         style: TextStyle(
@@ -79,6 +81,18 @@ class _CartScreen extends StatelessWidget {
             ),
           );
         });
+  }
+
+  void showSnackBar(BuildContext context, String text) {
+    var snackBar = SnackBar(
+      backgroundColor: Color.fromRGBO(85, 139, 47, 1),
+      duration: const Duration(seconds: 1),
+      content: Text(
+        text,
+        style: TextStyle(fontSize: 20.0),
+      ),
+    );
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Widget _total(snapshot) {
