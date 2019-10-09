@@ -1,4 +1,6 @@
+import 'package:easy_order/Screens/cart.dart';
 import 'package:flutter/material.dart';
+import 'DisplayCuisines.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
@@ -31,8 +33,21 @@ class CustomDrawer extends StatelessWidget {
               ],
             ),
           ),
-          _Custom(Icons.restaurant_menu, 'Menu', () => {}),
-          _Custom(Icons.shopping_cart, 'Cart', () => {}),
+          _Custom(Icons.restaurant_menu, 'Menu', ()  {
+            Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DisplayCuisine()),
+                    );
+          }),
+          _Custom(
+              Icons.shopping_cart,
+              'Cart',
+              () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Cart()),
+                    );
+                  }),
         ],
       ),
     );

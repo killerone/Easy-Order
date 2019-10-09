@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import './services/cart_services.dart';
+import './../services/cart_services.dart';
 import './drawer.dart';
 
 class Cart extends StatelessWidget {
