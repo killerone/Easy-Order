@@ -41,28 +41,24 @@ class _DisplayItemsState extends State<DisplayItems> {
           return ListView(
             scrollDirection: Axis.vertical,
             children: snapshot.data.documents.map((document) {
-              return Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: ListTile(
-                    title: Container(
-                      height: 180.0,
-                      width: 200.0,
-                      child: Image.network(document['imagePath'],fit:BoxFit.fitWidth),
-                    ),
-                    subtitle: Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          child: Text(document['name'], textAlign: TextAlign.center,style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.green.shade600),),
-                        )
-                      ],
-                    ),
-                    onTap: () => navigateToItems(document['name'].toString()),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey.shade400))),
+              return Card(
+                child: ListTile(
+                leading: Image.network(
+                document.data['imagePath'],
+                width: 80.0,
+                height: 80.0,
+                fit: BoxFit.fitHeight,
+              ),
+              title: Text(document.data['name']),
+              subtitle: Column(
+              children: <Widget>[
+              Container(
+              alignment: Alignment.topRight,
+              child: Text("\$${document.data['price']}"),
+              )
+              ],
+              ),
+              ),
               );
             }).toList(),
           );

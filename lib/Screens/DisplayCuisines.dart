@@ -24,14 +24,6 @@ class _DisplayCuisineState extends State<DisplayCuisine> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: new AppBar(
-        title: new Text(
-          'Cuisines',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-        centerTitle: true,
-      ),
       drawer: CustomDrawer(),
       body: StreamBuilder(
         stream: Firestore.instance.collection('cuisine').snapshots(),
