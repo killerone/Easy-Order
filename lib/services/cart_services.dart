@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartService {
   CartService();
-  CollectionReference FIRESTORE_REF = Firestore.instance
+  final CollectionReference FIRESTORE_REF = Firestore.instance
       .collection("cart")
-      .document("table5")
+      .document("TQIFryTnOnJCNYYCSTPt")
       .collection("items");
 
   Future<QuerySnapshot> getCart() {
@@ -45,15 +45,23 @@ class CartService {
               (onValue) => print("updated $quantity"));
   }
 
-  Future<dynamic> placeOrder() async {
+  Future<dynamic> placeOrder(
+      final String customization, final double totalAmount) async {
     final cart = await this.getCart();
     var order = [];
-    cart.documents.forEach((dish) {
-      order.add(dish);
+    if (cart.documents.length == 0) return 0;
+
+    cart.documents.forEach((d) async {
+      order.add(d.data);
+      await d.reference.delete();
     });
 
-    return Firestore.instance
-        .collection("order")
-        .add({'items': order, 'status': 0});
+    return Firestore.instance.collection("order").add({
+      'items': order,
+      'status': 0,
+      'tableNumber': 5,
+      'customization': customization,
+      'totalAmount': totalAmount
+    });
   }
 }

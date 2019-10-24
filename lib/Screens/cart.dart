@@ -11,13 +11,14 @@ class Cart extends StatelessWidget {
 }
 
 class _CartScreen extends StatelessWidget {
+  var _totalAmount;
   final cartService = new CartService();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
             .collection("cart")
-            .document("table5")
+            .document("TQIFryTnOnJCNYYCSTPt")
             .collection("items")
             .snapshots(),
         builder: (context, snapshot) {
@@ -63,7 +64,10 @@ class _CartScreen extends StatelessWidget {
                   Expanded(
                     child: MaterialButton(
                       onPressed: () {
-                        this.cartService.placeOrder().then((r) {this.showSnackBar(context, "Order Placed..")});
+                        _customizeDialog(context);
+                        // print("Clicked");
+
+                        // this.cartService.placeOrder()
                       },
                       child: Text(
                         "PLACE ORDER",
@@ -95,18 +99,21 @@ class _CartScreen extends StatelessWidget {
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
+  // ========== Total of Cart =============
   Widget _total(snapshot) {
     double totalPrice = 0;
     for (var i = 0; i < snapshot.data.documents.length; i++) {
       totalPrice += snapshot.data.documents[i].data['price'] *
           snapshot.data.documents[i].data['quantity'];
     }
+    this._totalAmount = totalPrice;
     return Text(
       "\₹ $totalPrice",
       style: TextStyle(color: Colors.green),
     );
   }
 
+  // ========= Individual Cart Item =============
   Widget _buildCartItem(DocumentSnapshot document) {
     return Card(
       child: ListTile(
@@ -153,5 +160,82 @@ class _CartScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ========== Customization dialog  ==========
+  Future<bool> _customizeDialog(context) {
+    TextEditingController customController = TextEditingController();
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Customization'),
+            content: TextFormField(
+              controller: customController,
+              maxLines: 5,
+              initialValue: 'himasu',
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('Submit'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  cartService
+                      .placeOrder(customController.text.toString(),this._totalAmount)
+                      .then((r) {
+                    print("Order placed");
+                  });
+                  // this.showSnackBar(context, "Order Placed..");
+                },
+              )
+            ],
+
+            // shape: RoundedRectangleBorder(
+            //     borderRadius: BorderRadius.circular(10.0)),
+            // child: Container(
+            //   child: Column(
+            //     mainAxisSize: MainAxisSize.min,
+            //     children: <Widget>[
+            //       Container(
+            //         child:
+            //       ),
+            //       Align(
+            //         alignment: Alignment.bottomCenter,
+            //         child: FlatButton(
+            //             color: Color.fromRGBO(161, 221, 112, 1),
+            //             child: Text(
+            //               "Apply",
+            //               style: TextStyle(
+            //                   color: Colors.white.withOpacity(0.7),
+            //                   fontFamily: "Montserrat",
+            //                   fontSize: 20.0,
+            //                   fontWeight: FontWeight.w600),
+            //             ),
+            //             onPressed: () {
+            //               Navigator.of(context).pop();
+            //               cartService
+            //                   .placeOrder(customController.text.toString())
+            //                   .then((r) {
+            //                 print("Order placed");
+            //                 // this.showSnackBar(context, "Order Placed..");
+            //               });
+            //             }),
+            //       )
+            //     ],
+            //   ),
+            //   // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+            // ),
+          );
+        });
+  }
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog();
+        });
   }
 }

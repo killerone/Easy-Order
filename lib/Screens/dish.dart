@@ -181,50 +181,7 @@ void previousScreen(BuildContext context) {
   showSnackBar(context, 'Previous Page');
 }
 
-Future<bool> customizeDialog(context) {
-  return showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    "Customize",
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.7),
-                        fontFamily: "Montserrat",
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                customizeOptions(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: FlatButton(
-                      color: Color.fromRGBO(161, 221, 112, 1),
-                      child: Text(
-                        "Apply",
-                        style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontFamily: "Montserrat",
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      onPressed: () {}),
-                )
-              ],
-            ),
-            // decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-          ),
-        );
-      });
-}
+
 
 Widget customizeOptions() {
   return Container(
