@@ -139,7 +139,7 @@ class _CartScreen extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.arrow_drop_up),
-                  iconSize: 50.0,
+                   iconSize: 50.0,
                   onPressed: () {
                     print("Clicked");
                     cartService.increaseQuantity(document.documentID);
@@ -174,7 +174,6 @@ class _CartScreen extends StatelessWidget {
             content: TextFormField(
               controller: customController,
               maxLines: 5,
-              initialValue: 'himasu',
             ),
             actions: <Widget>[
               MaterialButton(
