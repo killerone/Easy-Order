@@ -39,20 +39,26 @@ class _DisplayItemsState extends State<DisplayItems> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return Text('Loading Data ...... Please wait');
           return ListView(
+            scrollDirection: Axis.vertical,
             children: snapshot.data.documents.map((document) {
-              return Container(
+              return Card(
                 child: ListTile(
-                  title: Column(
-                    children: <Widget>[
-                      Container(
-                        child: Image.network(document['imagePath']),
-                        height:180.0,
-                        ),
-                    ],
-                  ),
-                  subtitle: Text(document['name']),
-                  onTap: () => navigateToItems(document.documentID.toString()),
-                ),
+                leading: Image.network(
+                document.data['imagePath'],
+                width: 80.0,
+                height: 80.0,
+                fit: BoxFit.fitHeight,
+              ),
+              title: Text(document.data['name']),
+              subtitle: Column(
+              children: <Widget>[
+              Container(
+              alignment: Alignment.topRight,
+              child: Text("\$${document.data['price']}"),
+              )
+              ],
+              ),
+              ),
               );
             }).toList(),
           );

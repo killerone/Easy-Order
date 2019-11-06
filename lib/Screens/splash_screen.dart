@@ -27,7 +27,7 @@ class _SplashScreenState  extends State<SplashScreen>{
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(colors:[ Colors.lightGreenAccent,Colors.lightGreen.shade600],
+              gradient: LinearGradient(colors:[ Colors.green.shade300,Colors.green.shade600],
                 begin: Alignment.bottomCenter,
                 end : Alignment.topCenter,
               ),
@@ -41,7 +41,7 @@ class _SplashScreenState  extends State<SplashScreen>{
                 radius: 60.0,
                 child: Icon(
                   Icons.restaurant,
-                  color: Colors.lightGreen,
+                  color: Colors.green.shade600,
                   size: 65.0,
                 ),
               ),

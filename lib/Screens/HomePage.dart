@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_order/Screens/DisplayCuisines.dart';
 import 'package:flutter/material.dart';
 import './drawer.dart';
 import 'cart.dart';
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: CustomDrawer(),
+      body: DisplayCuisine(),
     );
   }
 }
