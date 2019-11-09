@@ -15,8 +15,9 @@ class _DisplayItemsState extends State<DisplayItems> {
   final cuisine;
   _DisplayItemsState(this.cuisine);
 
-  navigateToItems(String name){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Dish(id:name)));
+  navigateToItems(String name) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Dish(id: name)));
   }
 
   navigateToCart() {}
@@ -30,7 +31,8 @@ class _DisplayItemsState extends State<DisplayItems> {
         ),
         backgroundColor: Theme.of(context).primaryColor,
         centerTitle: true,
-      ),drawer: CustomDrawer(),
+      ),
+      drawer: CustomDrawer(),
       body: StreamBuilder(
         stream: Firestore.instance
             .collection('dish')
@@ -43,22 +45,23 @@ class _DisplayItemsState extends State<DisplayItems> {
             children: snapshot.data.documents.map((document) {
               return Card(
                 child: ListTile(
-                leading: Image.network(
-                document.data['imagePath'],
-                width: 80.0,
-                height: 80.0,
-                fit: BoxFit.fitHeight,
-              ),
-              title: Text(document.data['name']),
-              subtitle: Column(
-              children: <Widget>[
-              Container(
-              alignment: Alignment.topRight,
-              child: Text("\$${document.data['price']}"),
-              )
-              ],
-              ),
-              ),
+                  leading: Image.network(
+                    document.data['imagePath'],
+                    width: 80.0,
+                    height: 80.0,
+                    fit: BoxFit.fitHeight,
+                  ),
+                  title: Text(document.data['name']),
+                  subtitle: Column(
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.topRight,
+                        child: Text("\$₹ {document.data['price']}"),
+                      )
+                    ],
+                  ),
+                  onTap: () => navigateToItems(document.documentID.toString()),
+                ),
               );
             }).toList(),
           );
