@@ -56,7 +56,7 @@ class _DisplayItemsState extends State<DisplayItems> {
                     children: <Widget>[
                       Container(
                         alignment: Alignment.topRight,
-                        child: Text("\$₹ {document.data['price']}"),
+                        child: Text("₹ ${document.data['price']}"),
                       )
                     ],
                   ),

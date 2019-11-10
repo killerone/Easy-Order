@@ -128,7 +128,7 @@ class _CartScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               alignment: Alignment.bottomLeft,
-              child: Text("\$${document.data['price']}"),
+              child: Text("\₹ ${document.data['price']}"),
             )
           ],
         ),
@@ -139,14 +139,15 @@ class _CartScreen extends StatelessWidget {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.arrow_drop_up),
-                   iconSize: 50.0,
+                  iconSize: 50.0,
                   onPressed: () {
                     print("Clicked");
                     cartService.increaseQuantity(document.documentID);
                   },
                 ),
                 Text(document.data['quantity'].toString(),
-                    style: TextStyle(fontSize: 40.0, color: Colors.green.shade600)),
+                    style: TextStyle(
+                        fontSize: 40.0, color: Colors.green.shade600)),
                 IconButton(
                   icon: Icon(Icons.arrow_drop_down),
                   iconSize: 50.0,
@@ -182,7 +183,8 @@ class _CartScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                   cartService
-                      .placeOrder(customController.text.toString(),this._totalAmount)
+                      .placeOrder(
+                          customController.text.toString(), this._totalAmount)
                       .then((r) {
                     print("Order placed");
                   });
