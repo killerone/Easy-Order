@@ -25,10 +25,10 @@ class _DisplayItemsState extends State<DisplayItems> {
     return Scaffold(
       appBar: new AppBar(
         title: new Text(
-          'Cuisines',
+          cuisine,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.teal.shade600,
         centerTitle: true,
       ),drawer: CustomDrawer(),
       body: StreamBuilder(
@@ -54,7 +54,7 @@ class _DisplayItemsState extends State<DisplayItems> {
               children: <Widget>[
               Container(
               alignment: Alignment.topRight,
-              child: Text("\$${document.data['price']}"),
+              child: Text("\₹${document.data['price']}"),
               )
               ],
               ),

@@ -45,7 +45,7 @@ class _DisplayCuisineState extends State<DisplayCuisine> {
                       children: <Widget>[
                         Container(
                           alignment: Alignment.center,
-                          child: Text(document['name'], textAlign: TextAlign.center,style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.green.shade600),),
+                          child: Text(document['name'], textAlign: TextAlign.center,style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold,color: Colors.teal.shade600),),
                         )
                       ],
                     ),
@@ -78,7 +78,7 @@ class custom extends StatelessWidget {
             border: Border(bottom: BorderSide(color: Colors.grey.shade400))),
         child: InkWell(
           onTap: onTap,
-          splashColor: Colors.lightGreenAccent,
+          splashColor: Colors.tealAccent,
           child: Container(
             height: 60.0,
             child: Row(

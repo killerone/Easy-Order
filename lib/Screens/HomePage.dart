@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: new AppBar(
         title: Text('Easy Order', style: TextStyle(color: Colors.white)),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.teal.shade600,
         centerTitle: true,
         actions: <Widget>[
           Stack(
