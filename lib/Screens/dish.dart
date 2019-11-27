@@ -144,7 +144,7 @@ class AddItemButton extends StatelessWidget {
       width: 300.0,
       height: 50.0,
       child: RaisedButton(
-        color: Colors.green.shade600,
+        color: Colors.teal.shade600,
         child: Text(
           "ORDER",
           style: TextStyle(

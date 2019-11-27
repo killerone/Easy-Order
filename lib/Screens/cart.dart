@@ -38,7 +38,7 @@ class _CartScreen extends StatelessWidget {
           return Scaffold(
             appBar: new AppBar(
               title: Text('Cart', style: TextStyle(color: Colors.white)),
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Colors.teal.shade600,
               centerTitle: false,
             ),
             drawer: CustomDrawer(),
@@ -77,7 +77,7 @@ class _CartScreen extends StatelessWidget {
                             letterSpacing: 1.0,
                             wordSpacing: 2.0),
                       ),
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.teal.shade600,
                     ),
                   )
                 ],
@@ -109,7 +109,7 @@ class _CartScreen extends StatelessWidget {
     this._totalAmount = totalPrice;
     return Text(
       "\₹ $totalPrice",
-      style: TextStyle(color: Colors.green.shade600),
+      style: TextStyle(color: Colors.teal.shade600),
     );
   }
 
@@ -146,8 +146,7 @@ class _CartScreen extends StatelessWidget {
                   },
                 ),
                 Text(document.data['quantity'].toString(),
-                    style: TextStyle(
-                        fontSize: 40.0, color: Colors.green.shade600)),
+                    style: TextStyle(fontSize: 40.0, color: Colors.teal.shade600)),
                 IconButton(
                   icon: Icon(Icons.arrow_drop_down),
                   iconSize: 50.0,
